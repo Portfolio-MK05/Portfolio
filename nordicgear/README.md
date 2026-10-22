@@ -18,5 +18,3 @@ js/data.js   # produkty
 js/app.js    # logika sklepu
 img          # zdjęcia produktów
 ```
-## Publikacja
-GitHub Pages: Settings → Pages → branch `main`, folder `/root`.
