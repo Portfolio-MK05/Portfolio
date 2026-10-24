@@ -4,44 +4,199 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Mikołaj Kwiatkowski - Portfolio</title>
-<meta name="description" content="Strona startowa repozytorium: portfolio Mikołaja Kwiatkowskiego, technika informatyka, oraz projekt NordicGear.">
+<meta name="description" content="Portfolio Mikołaja Kwiatkowskiego: technik informatyk, student AI &amp; Data Science. Projekty i umiejętności.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230c0d0f'/%3E%3Ctext x='16' y='22' font-size='16' font-family='sans-serif' font-weight='800' text-anchor='middle' fill='%23f0b45a'%3EMK%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&display=swap">
 <style>
 :root{--bg:#0c0d0f;--panel:#15171a;--line:#262a2f;--ink:#eceef0;--mut:#8d959d;--ac:#f0b45a}
 *{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
 body{margin:0;min-height:100vh;background:var(--bg);color:var(--ink);font:400 17px/1.6 'Bricolage Grotesque',system-ui,sans-serif;display:flex;flex-direction:column}
 a{color:inherit}
 :focus-visible{outline:3px solid var(--ac);outline-offset:3px}
-main{flex:1;width:100%;max-width:880px;margin:0 auto;padding:clamp(48px,12vw,120px) 22px 40px;animation:fade .6s ease both}
+
+/* nawigacja */
+.nav{position:sticky;top:0;z-index:5;background:rgba(12,13,15,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.nav>div{max-width:880px;margin:0 auto;padding:14px 22px;display:flex;gap:22px;align-items:center;flex-wrap:wrap}
+.nav b{font-weight:800;color:var(--ac);margin-right:auto;letter-spacing:-.02em}
+.nav a{color:var(--mut);text-decoration:none;font-size:.95rem}
+.nav a:hover{color:var(--ink)}
+
+/* przełącznik języka */
+.lang{display:flex;gap:2px;border:1px solid var(--line);border-radius:999px;padding:3px}
+.lang button{background:none;border:0;color:var(--mut);font:inherit;font-size:.85rem;padding:2px 12px;border-radius:999px;cursor:pointer}
+.lang button:hover{color:var(--ink)}
+.lang button[aria-pressed="true"]{background:var(--ac);color:#0c0d0f;font-weight:600}
+
+main{flex:1;width:100%;max-width:880px;margin:0 auto;padding:0 22px 40px}
+section{padding:clamp(40px,8vw,72px) 0 0}
+h2{font-size:clamp(1.6rem,4vw,2.2rem);letter-spacing:-.03em;line-height:1.1;margin:0 0 20px;font-weight:800}
+p{margin:0 0 14px;max-width:62ch}
+.mut{color:var(--mut)}
+
+/* hero */
+.hero{padding-top:clamp(48px,12vw,110px)}
 .role{color:var(--mut);margin:0}
 h1{font-size:clamp(2.4rem,9vw,5rem);line-height:1;letter-spacing:-.04em;margin:8px 0 18px;font-weight:800}
-.lead{max-width:56ch;color:var(--mut);margin:0 0 44px}
+.lead{max-width:56ch;color:var(--mut);margin:0 0 28px;font-size:1.1rem}
+.cta{display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;padding:12px 20px;border-radius:12px;border:1px solid var(--line);text-decoration:none;font-weight:600;transition:border-color .2s}
+.btn:hover{border-color:var(--ac)}
+.btn.main{background:var(--ac);border-color:var(--ac);color:#0c0d0f}
+
+/* o mnie */
+.about{display:grid;grid-template-columns:1.4fr 1fr;gap:32px}
+.facts{list-style:none;margin:0;padding:0;border-left:2px solid var(--line);padding-left:20px;display:grid;gap:14px;align-content:start}
+.facts strong{display:block}
+.facts span{color:var(--mut);font-size:.95rem}
+
+/* projekty */
 .links{display:grid;gap:14px;list-style:none;padding:0;margin:0}
 .links a{display:grid;grid-template-columns:1fr auto;align-items:center;gap:6px 16px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px 22px;text-decoration:none;transition:border-color .2s,transform .2s}
 .links a:hover{border-color:var(--ac);transform:translateY(-2px)}
 .links strong{font-size:1.25rem}
 .links span{grid-column:1;color:var(--mut);font-size:.95rem}
 .links i{grid-row:1/3;grid-column:2;font-style:normal;color:var(--ac);font-size:1.4rem}
-footer{padding:26px 22px;text-align:center;color:var(--mut);font-size:.9rem;border-top:1px solid var(--line)}
+
+/* umiejętności */
+.skills{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.skills div{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 20px}
+.skills h3{margin:0 0 6px;font-size:1.05rem}
+.skills p{margin:0;color:var(--mut);font-size:.95rem}
+
+footer{margin-top:40px;padding:26px 22px;text-align:center;color:var(--mut);font-size:.9rem;border-top:1px solid var(--line)}
 footer a{color:var(--ink)}
+
 @keyframes fade{from{opacity:0;transform:translateY(10px)}}
-@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.hero{animation:fade .6s ease both}
+@media(max-width:700px){
+  .about{grid-template-columns:1fr}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 </style>
 </head>
 <body>
-<main>
-  <p class="role">Technik informatyk | Wsparcie IT / Helpdesk</p>
-  <h1>Mikołaj Kwiatkowski</h1>
-  <p class="lead">Strona startowa mojego repozytorium. Poniżej znajdziesz portfolio i projekty.</p>
+<nav class="nav" aria-label="Nawigacja">
+  <div>
+    <b>MK</b>
+    <a href="#o-mnie" data-i18n="nav_about">O mnie</a>
+    <a href="#projekty" data-i18n="nav_projects">Projekty</a>
+    <a href="#umiejetnosci" data-i18n="nav_skills">Umiejętności</a>
+    <a href="#kontakt" data-i18n="nav_contact">Kontakt</a>
+    <div class="lang" role="group" aria-label="Język / Language">
+      <button type="button" data-lang="pl" aria-pressed="true" lang="pl">PL</button>
+      <button type="button" data-lang="en" aria-pressed="false" lang="en">EN</button>
+    </div>
+  </div>
+</nav>
 
-  <ul class="links">
-    <li><a href="https://www.linkedin.com/in/mikolaj-kwiatkowski-759343365/"><strong>LinkedIn</strong><span>Doświadczenie, umiejętności, wykształcenie i kontakt</span><i aria-hidden="true">→</i></a></li>
-    <li><a href="https://planer-budzetu.netlify.app"><strong>Planer budżetu</strong><span>Pełna aplikacja mobilna, system logowania, baza danych firebase i netlify</span><i aria-hidden="true">→</i></a></li>
-    <li><a href="https://portfolio-mk05.github.io/Portfolio/nordicgear/"><strong>NordicGear</strong><span>Sklep internetowy: HTML, CSS, JavaScript</span><i aria-hidden="true">→</i></a></li>
-    <li><a href="https://github.com/Portfolio-MK05/Portfolio" target="_blank" rel="noreferrer"><strong>GitHub</strong><span>Kod źródłowy i pozostałe repozytoria</span><i aria-hidden="true">↗</i></a></li>
-  </ul>
+<main>
+  <header class="hero">
+    <p class="role" data-i18n="role">Technik informatyk | Wsparcie IT / Helpdesk</p>
+    <h1>Mikołaj Kwiatkowski</h1>
+    <p class="lead" data-i18n="lead">Technik informatyk z Wrocławia, student AI &amp; Data Science. Łączę praktykę we wsparciu IT i e-commerce z nauką programowania i pracy z danymi.</p>
+    <div class="cta">
+      <a class="btn main" href="#projekty" data-i18n="btn_projects">Zobacz projekty</a>
+      <a class="btn" href="mailto:mikolajkwiatkowski@outlook.com" data-i18n="btn_mail">Napisz do mnie</a>
+    </div>
+  </header>
+
+  <section id="o-mnie">
+    <h2 data-i18n="about_h">O mnie</h2>
+    <div class="about">
+      <div>
+        <p data-i18n="about_p1">Od października 2026 studiuję informatykę na specjalności AI &amp; Data Science na Uniwersytecie WSB Merito we Wrocławiu. Wcześniej skończyłem technikum informatyczne i zdobyłem kwalifikacje INF.02 (administracja systemami i sieciami) oraz INF.03 (strony, aplikacje internetowe i bazy danych).</p>
+        <p data-i18n="about_p2">Praktycznie uczyłem się w pracy: w sklepie internetowym dodawałem około 200 produktów dziennie w Subiekt GT i korzystałem z AI przy opisach, a na praktykach administrowałem systemami Windows i rozwiązywałem problemy użytkowników.</p>
+        <p data-i18n="about_p3">Szukam miejsca, w którym rozwinę się w IT i będę uczył się na prawdziwych zadaniach.</p>
+      </div>
+      <ul class="facts">
+        <li><strong>Wrocław</strong><span data-i18n="fact_licence">Prawo jazdy kat. B</span></li>
+        <li><strong data-i18n="fact_lang_h">Języki</strong><span data-i18n="fact_lang">angielski B2, hiszpański A2, niemiecki A1</span></li>
+        <li><strong data-i18n="fact_int_h">Interesuje mnie</strong><span data-i18n="fact_int">sztuczna inteligencja, data science, nowe technologie</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="projekty">
+    <h2 data-i18n="proj_h">Projekty</h2>
+    <ul class="links">
+      <li><a href="https://www.linkedin.com/in/mikolaj-kwiatkowski-759343365/"><strong>LinkedIn</strong><span data-i18n="proj_li">Doświadczenie, umiejętności, wykształcenie i kontakt</span><i aria-hidden="true">→</i></a></li>
+      <li><a href="https://planer-budzetu.netlify.app"><strong>Planer budżetu</strong><span data-i18n="proj_planer">Pełna aplikacja mobilna, system logowania, baza danych firebase i netlify</span><i aria-hidden="true">→</i></a></li>
+      <li><a href="https://portfolio-mk05.github.io/Portfolio/nordicgear/"><strong>NordicGear</strong><span data-i18n="proj_nordic">Sklep internetowy: HTML, CSS, JavaScript</span><i aria-hidden="true">→</i></a></li>
+      <li><a href="https://github.com/Portfolio-MK05/Portfolio" target="_blank" rel="noreferrer"><strong>GitHub</strong><span data-i18n="proj_gh">Kod źródłowy i pozostałe repozytoria</span><i aria-hidden="true">↗</i></a></li>
+    </ul>
+  </section>
+
+  <section id="umiejetnosci">
+    <h2 data-i18n="skills_h">Umiejętności</h2>
+    <div class="skills">
+      <div><h3 data-i18n="sk1_h">Programowanie i bazy</h3><p data-i18n="sk1">HTML5, CSS3, JavaScript, PHP, MySQL i zapytania SQL, podstawy Pythona</p></div>
+      <div><h3 data-i18n="sk2_h">IT i administracja</h3><p data-i18n="sk2">Windows, Linux, backup, bezpieczeństwo danych, zarządzanie uprawnieniami</p></div>
+      <div><h3 data-i18n="sk3_h">Sieci i sprzęt</h3><p data-i18n="sk3">Konfiguracja LAN, routery, switche, diagnostyka, montaż i serwis komputerów</p></div>
+      <div><h3 data-i18n="sk4_h">E-commerce i AI</h3><p data-i18n="sk4">Subiekt GT, opisy produktów z użyciem AI, edycja grafiki</p></div>
+    </div>
+  </section>
+
+  <section id="kontakt">
+    <h2 data-i18n="contact_h">Kontakt</h2>
+    <p data-i18n="contact_p">Napisz, jeśli chcesz porozmawiać o pracy, stażu lub projekcie.</p>
+    <p><a href="mailto:mikolajkwiatkowski@outlook.com">mikolajkwiatkowski@outlook.com</a></p>
+  </section>
 </main>
-<footer>Kontakt: <a href="mailto:mikolajkwiatkowski@outlook.com">mikolajkwiatkowski@outlook.com</a></footer>
+<footer>© Mikołaj Kwiatkowski</footer>
+
+<script>
+(function(){
+  var EN={
+    nav_about:'About me', nav_projects:'Projects', nav_skills:'Skills', nav_contact:'Contact',
+    role:'IT technician | IT Support / Helpdesk',
+    lead:'IT technician from Wrocław, AI &amp; Data Science student. I combine hands-on experience in IT support and e-commerce with learning programming and working with data.',
+    btn_projects:'See projects', btn_mail:'Get in touch',
+    about_h:'About me',
+    about_p1:'Since October 2026 I have been studying Computer Science, specialising in AI &amp; Data Science, at WSB Merito University in Wrocław. Earlier I completed a technical secondary school in IT and earned the INF.02 (administration of computer systems, hardware and networks) and INF.03 (websites, web applications and databases) qualifications.',
+    about_p2:'I learned mostly on the job: in an online store I added around 200 products a day in Subiekt GT and used AI for product descriptions, and during internships I administered Windows systems and solved users’ problems.',
+    about_p3:'I’m looking for a place where I can grow in IT and learn on real tasks.',
+    fact_licence:'Category B driving licence',
+    fact_lang_h:'Languages', fact_lang:'English B2, Spanish A2, German A1',
+    fact_int_h:'Interests', fact_int:'artificial intelligence, data science, new technologies',
+    proj_h:'Projects',
+    proj_li:'Experience, skills, education and contact',
+    proj_planer:'Full mobile app with a login system, Firebase database and Netlify hosting',
+    proj_nordic:'Online store: HTML, CSS, JavaScript',
+    proj_gh:'Source code and other repositories',
+    skills_h:'Skills',
+    sk1_h:'Programming and databases', sk1:'HTML5, CSS3, JavaScript, PHP, MySQL and SQL queries, Python basics',
+    sk2_h:'IT and administration', sk2:'Windows, Linux, backup, data security, permission management',
+    sk3_h:'Networks and hardware', sk3:'LAN configuration, routers, switches, diagnostics, PC assembly and repair',
+    sk4_h:'E-commerce and AI', sk4:'Subiekt GT, AI-assisted product descriptions, image editing',
+    contact_h:'Contact',
+    contact_p:'Write to me if you’d like to talk about a job, internship or project.'
+  };
+  var els=[].slice.call(document.querySelectorAll('[data-i18n]'));
+  els.forEach(function(e){e.setAttribute('data-pl',e.innerHTML);});
+  var meta=document.querySelector('meta[name="description"]');
+  var nav=document.querySelector('.nav');
+  var PL_META=meta.getAttribute('content'), PL_NAV=nav.getAttribute('aria-label');
+  var EN_META='Portfolio of Mikołaj Kwiatkowski: IT technician, AI & Data Science student. Projects and skills.';
+  var buttons=[].slice.call(document.querySelectorAll('.lang button'));
+
+  function setLang(l,save){
+    var en=l==='en';
+    els.forEach(function(e){e.innerHTML=en?EN[e.getAttribute('data-i18n')]:e.getAttribute('data-pl');});
+    document.documentElement.lang=en?'en':'pl';
+    meta.setAttribute('content',en?EN_META:PL_META);
+    nav.setAttribute('aria-label',en?'Navigation':PL_NAV);
+    buttons.forEach(function(b){b.setAttribute('aria-pressed',b.getAttribute('data-lang')===l?'true':'false');});
+    if(save){try{localStorage.setItem('lang',l);}catch(err){}}
+  }
+
+  buttons.forEach(function(b){b.addEventListener('click',function(){setLang(b.getAttribute('data-lang'),true);});});
+
+  var saved=null;
+  try{saved=localStorage.getItem('lang');}catch(err){}
+  var initial=saved||((navigator.language||'pl').slice(0,2)==='pl'?'pl':'en');
+  if(initial==='en'){setLang('en',false);}
+})();
+</script>
 </body>
 </html>
